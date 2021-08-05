@@ -1,0 +1,20 @@
+# Copyright 2021 jtirado
+# See LICENSE file for licensing details.
+
+options:
+  port:
+    default: 1880
+    description: Server port number.
+    type: int
+  title:
+    default: "Node-RED charm"
+    description: Title for the main window.
+    type: string
+  safe:
+    default: true
+    description: Disable running nodes after starting.
+    type: boolean
+  hostname:
+    default: "node-red.juju"
+    description: Service hostname.
+    type: string
