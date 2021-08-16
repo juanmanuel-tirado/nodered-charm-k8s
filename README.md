@@ -83,6 +83,45 @@ nodered/0*                   active    idle   10.1.250.243
 When both applications are ready, NodeRED will be available on the ingress IP and the port indicated in
 the configuration file.
 
+## Actions
+
+# Install-package
+
+Install a node-red package through the node-red-admin API.
+
+```
+juju run-action nodered/0 install-package package=node-red-dashboard
+Action queued with id: "14"
+UnitId: nodered/0
+id: "16"
+log:
+- 2021-08-16 12:23:01 +0200 CEST Module node-red-dashboard installed
+results: {}
+status: completed
+timing:
+  completed: 2021-08-16 10:23:01 +0000 UTC
+  enqueued: 2021-08-16 10:22:54 +0000 UTC
+  started: 2021-08-16 10:22:54 +0000 UTC
+```
+
+# Uninstall-package
+
+Uninstall a node-red package through the node-red-admin API.
+```
+juju run-action nodered/0 uninstall-package package=node-red-dashboard
+Action queued with id: "26"
+UnitId: nodered/0
+id: "26"
+log:
+- 2021-08-16 12:37:02 +0200 CEST Module node-red-dashboard uninstalled
+results: {}
+status: completed
+timing:
+  completed: 2021-08-16 10:37:02 +0000 UTC
+  enqueued: 2021-08-16 10:36:57 +0000 UTC
+  started: 2021-08-16 10:36:59 +0000 UTC
+```
+
 
 ## Developing
 

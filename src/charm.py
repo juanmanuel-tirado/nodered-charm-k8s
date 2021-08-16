@@ -4,6 +4,7 @@
 
 
 import logging
+import requests
 
 from charms.nginx_ingress_integrator.v0.ingress import IngressRequires
 
@@ -13,12 +14,18 @@ from ops.model import ActiveStatus
 
 logger = logging.getLogger(__name__)
 
+METHOD_GET='get'
+METHOD_POST='post'
+METHOD_DELETE='delete'
+
 
 class NoderedOperatorCharm(CharmBase):
 
     def __init__(self, *args):
         super().__init__(*args)
         self.framework.observe(self.on.config_changed, self._on_config_changed)
+        self.framework.observe(self.on.install_package_action, self._on_install_package_action)
+        self.framework.observe(self.on.uninstall_package_action, self._on_uninstall_package_action)
         self.ingress = IngressRequires(self, {
             'service-hostname': self.model.config['hostname'],
             'service-name': self.app.name,
@@ -49,6 +56,55 @@ class NoderedOperatorCharm(CharmBase):
                 }
             },
         }
+
+    def _call_api(self, method, uri, json):
+        '''
+        Generic method to call the Node-red api for a given URI and
+        the json payload. It returns result object.
+        '''
+        if method==METHOD_GET:
+            return requests.post(uri, json=json)
+        if method==METHOD_POST:
+            return requests.post(uri, json=json)
+        if method==METHOD_DELETE:
+            return requests.delete(uri,json=json)
+        
+
+    def _on_install_package_action(self, event):
+        """Handle the install-package action."""
+        # Fetch the package parameter from the ActionEvent params dict
+        
+        package = event.params['package']
+        # Use shell to execute the command
+        uri = f'http://localhost:{self.model.config["port"]}/nodes'
+        r = self._call_api(METHOD_POST, uri, {'module': package})
+        
+        if not r.ok:
+            event.log(f'Failed with code {r.status_code}: {r.text}')
+            event.fail(
+                f'Failed to run {uri}. Output was:\n{r.status_code}'
+            )
+        else:
+            event.log(f'Module {package} installed')
+
+    def _on_uninstall_package_action(self, event):
+        """Handle the uninstall-package action."""
+        # Fetch the package parameter from the ActionEvent params dict
+        
+        package = event.params['package']
+        # Use shell to execute the command
+        uri = f'http://localhost:{self.model.config["port"]}/nodes/{package}'
+        r = self._call_api(METHOD_DELETE, uri, {})
+        
+        if not r.ok:
+            event.log(f'Failed with code {r.status_code}: {r.text}')
+            event.fail(
+                f'Failed to run {uri}. Output was:\n{r.status_code}'
+            )
+        else:
+            event.log(f'Module {package} uninstalled')
+
+        
 
     def _on_config_changed(self, event):
         '''

@@ -7,10 +7,19 @@
 #
 # Learn more about actions at: https://juju.is/docs/sdk/actions
 
-fortune:
-  description: Returns a pithy phrase.
+install-package:
+  description: Install npm package.
   params:
-    fail:
-      description: "Fail with this message"
+    package:
+      description: Name of the npm package.
       type: string
       default: ""
+  required: [package]
+uninstall-package:
+  description: Uninstall npm package.
+  params:
+    package:
+      description: Name of the npm package.
+      type: string
+      default: ""
+  required: [package]
