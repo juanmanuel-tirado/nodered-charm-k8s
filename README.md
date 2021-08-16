@@ -83,11 +83,13 @@ nodered/0*                   active    idle   10.1.250.243
 When both applications are ready, NodeRED will be available on the ingress IP and the port indicated in
 the configuration file.
 
-## Actions
+# Actions
 
-# Install-package
+This charm uses the node-red-admin API to offer the following actions.
 
-Install a node-red package through the node-red-admin API. For example, to install the node-red-dashboard package:
+## Install-package
+
+Install a node-red package. For example, to install the `node-red-dashboard` package:
 
 ```
 $ juju run-action nodered/0 install-package package=node-red-dashboard
@@ -105,9 +107,9 @@ timing:
   started: 2021-08-16 10:22:54 +0000 UTC
 ```
 
-# Uninstall-package
+## Uninstall-package
 
-Uninstall a node-red package through the node-red-admin API.
+Uninstall a node-red package.
 ```
 $ juju run-action nodered/0 uninstall-package package=node-red-dashboard
 Action queued with id: "26"
