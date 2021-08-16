@@ -1,9 +1,9 @@
 # Copyright 2021 jtirado
 # See LICENSE file for licensing details.
-name: nodered
+name: node-red-k8s
 description: |
   Node-RED is a graphical programming language.
-summary: |
+summary: Node-RED charm for K8s.
 description: |
   Node-RED is a programming tool for wiring together hardware 
   devices, APIs and online services in new and interesting ways.
