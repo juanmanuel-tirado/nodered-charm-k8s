@@ -87,13 +87,14 @@ the configuration file.
 
 # Install-package
 
-Install a node-red package through the node-red-admin API.
+Install a node-red package through the node-red-admin API. For example, to install the node-red-dashboard package:
 
 ```
-juju run-action nodered/0 install-package package=node-red-dashboard
+$ juju run-action nodered/0 install-package package=node-red-dashboard
 Action queued with id: "14"
+$ juju show-action-output 14
 UnitId: nodered/0
-id: "16"
+id: "14"
 log:
 - 2021-08-16 12:23:01 +0200 CEST Module node-red-dashboard installed
 results: {}
@@ -108,8 +109,9 @@ timing:
 
 Uninstall a node-red package through the node-red-admin API.
 ```
-juju run-action nodered/0 uninstall-package package=node-red-dashboard
+$ juju run-action nodered/0 uninstall-package package=node-red-dashboard
 Action queued with id: "26"
+$ juju show-action-output 26
 UnitId: nodered/0
 id: "26"
 log:
